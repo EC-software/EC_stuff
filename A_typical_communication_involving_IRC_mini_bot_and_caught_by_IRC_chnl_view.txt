@@ -1,0 +1,32 @@
+[martin@helium src]$ python IRC_chnl_view.py
+====== IRC_chnl_view.py ========================================================
+    Channel view for IRC
+    This program will echo to stdout, all messages on the specified IRC channel.
+        Server(port): irc.freenode.net (6667)
+        Channel: ##atalk 
+        as NICK, USER, Real name: chvi, ChVi, Channel Viewer
+    Each raw IRC message line is preceded by a viewer time stamp [hh:mm:ss]
+    Send 'atalk-kickview' from another IRC client to kick the viewer.
+================================================================================
+# Connected to: ('91.217.189.42', 6667) from ('192.168.xxx.xxx', xxxx)
+# Logged in ...
+[18:47:35] :chvi!~ChVi@MyISP.net JOIN ##atalk
+[18:47:35] :sinisalo.freenode.net 353 chvi = ##atalk :chvi hvid
+:sinisalo.freenode.net 366 chvi ##atalk :End of /NAMES list.
+[18:48:08] :atlk!~Atlk@MyISP.net JOIN ##atalk
+[18:48:08] :atlk!~Atlk@MyISP.net PRIVMSG ##atalk :The Atalk-bot is up. Write 'atalk-cmds' to see the commands...
+[18:48:34] :hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-cmds
+[18:48:34] :atlk!~Atlk@MyISP.net PRIVMSG ##atalk :Atalk Bot Commands = atalk-cmds, -ping, -salm, -kickbot
+[18:48:50] :hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-ping Hvad?
+[18:48:50] :atlk!~Atlk@MyISP.net PRIVMSG ##atalk :atalk-pong Hvad?
+[18:48:59] :hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-salm
+[18:48:59] :atlk!~Atlk@MyISP.net PRIVMSG ##atalk :1...................................................................................................100.................................................................................................200.................................................................................................300.................................................................................................400...............................................
+[18:49:15] :hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-kickbot
+[18:49:15] :atlk!~Atlk@MyISP.net PRIVMSG ##atalk :I received instruction to leave...
+[18:49:15] :atlk!~Atlk@MyISP.net PART ##atalk
+[18:49:33] :hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-view
+[18:49:39] PING :sinisalo.freenode.net
+[18:49:50] :hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-kickview
+# Closing down (:hvid!~Hvid@MyISP.net PRIVMSG ##atalk :atalk-kickview)
+# Logged out ...
+[martin@helium src]$ 
