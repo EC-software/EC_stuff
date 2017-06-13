@@ -1,11 +1,11 @@
 import pickle
-d = { "abc" : [1, 2, 3], "qwerty" : [4,5,6] }
-afile = open(r'data/test.pkl', 'wb')
+d = { "c1400067" : { "mahvi" : { "pw" : "secret"}},  "c1503681" : { "mahvi" : { "pw" : "secret"}}}
+afile = open(r'data/connect_info.ecp', 'wb')
 pickle.dump(d, afile)
 afile.close()
 
 #reload object from file
-file2 = open(r'data/test.pkl', 'rb')
+file2 = open(r'data/connect_info.ecp', 'rb')
 new_d = pickle.load(file2)
 file2.close()
 
