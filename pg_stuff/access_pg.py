@@ -13,11 +13,11 @@ dic_con = pickle.load(fil_con)
 fil_con.close()
 
 # hardcoded vales
-host = "localhost"
-user = "martin"
-dbnam = "martin"
-schem = "test"
-table = "dkn10_add_dens"
+host = "c1400067"
+user = "mahvi"
+dbnam = "pgv"
+schem = "temp_mahvi"
+table = "dar_adr"
 
 # overwrite with arguments from the command line
 parser = argparse.ArgumentParser(description='Connect to a data base')
