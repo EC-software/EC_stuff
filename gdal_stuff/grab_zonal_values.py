@@ -14,7 +14,7 @@ import gdal, ogr, osr, numpy
 import sys
 
 
-def zonal_stats(feat, input_zone_polygon, input_value_raster):
+def zonal_grabs(feat, input_zone_polygon, input_value_raster):
 
     # Open data
     raster = gdal.Open(input_value_raster)
@@ -61,7 +61,8 @@ def zonal_stats(feat, input_zone_polygon, input_value_raster):
                 pointsY.append(lat)
 
     else:
-        sys.exit("ERROR: Geometry needs to be either Polygon or Multipolygon")
+        print "ERROR: Geometry needs to be either Polygon or Multipolygon"
+        sys.exit(998)
 
     xmin = min(pointsX)
     xmax = max(pointsX)
@@ -97,7 +98,7 @@ def zonal_stats(feat, input_zone_polygon, input_value_raster):
     datamask = bandmask.ReadAsArray(0, 0, xcount, ycount).astype(numpy.float)
 
     # Mask zone of raster
-    zoneraster = numpy.ma.masked_array(dataraster,  numpy.logical_not(datamask))
+    zoneraster = numpy.ma.masked_array(dataraster, numpy.logical_not(datamask))
 
     ##print " - ZR {}".format(zoneraster)
     for row in zoneraster:
@@ -111,7 +112,7 @@ def zonal_stats(feat, input_zone_polygon, input_value_raster):
     return numpy.mean(zoneraster),numpy.median(zoneraster),numpy.std(zoneraster)
 
 
-def loop_zonal_stats(input_zone_polygon, input_value_raster):
+def loop_zonal_grabs(input_zone_polygon, input_value_raster):
 
     shp = ogr.Open(input_zone_polygon)
     lyr = shp.GetLayer()
@@ -120,26 +121,26 @@ def loop_zonal_stats(input_zone_polygon, input_value_raster):
 
     for FID in featList:
         feat = lyr.GetFeature(FID)
-        meanValue = zonal_stats(feat, input_zone_polygon, input_value_raster)
+        meanValue = zonal_grabs(feat, input_zone_polygon, input_value_raster)
         statDict[FID] = meanValue
         print " - FID: {} VAL: {}".format(FID, meanValue)
     return statDict
 
 def main(input_zone_polygon, input_value_raster):
-    return loop_zonal_stats(input_zone_polygon, input_value_raster)
+    return loop_zonal_grabs(input_zone_polygon, input_value_raster)
 
 
 if __name__ == "__main__":
 
     #
-    # Returns for each feature a dictionary item (FID) with the statistical values in the following order: Average, Mean, Medain, Standard Deviation, Variance
+    # Returns for each feature a dictionary item (FID) with listed values inside the zone
     #
     # example run : $ python grid.py <full-path><output-shapefile-name>.shp xmin xmax ymin ymax gridHeight gridWidth
     #
 
     if len( sys.argv ) != 3:
         print "[ ERROR ] you must supply two arguments: input-zone-shapefile-name.shp input-value-raster-name.tif "
-        sys.exit( 1 )
-    print 'Returns for each feature a dictionary item (FID) with the statistical values in the following order: Average, Mean, Medain, Standard Deviation, Variance'
+        sys.exit(999)
+    print 'Returns for each feature a dictionary item FID, with the statistical values in the following order: Mean, Medain, Standard Deviation'
     print main( sys.argv[1], sys.argv[2] )
 
