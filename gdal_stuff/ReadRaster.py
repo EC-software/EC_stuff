@@ -15,7 +15,8 @@ Note: (where posible)
 # *** Open input raster and vector and turn both into relevant format
 # ** open Raster data
 
-img = gdal.Open("R:\DTM\SLO160\slo160.vrt", gdalconst.GA_ReadOnly)
+#img = gdal.Open("R:\DTM\SLO160\slo160.vrt", gdalconst.GA_ReadOnly)
+img = gdal.Open("R:/DTM/SLO160/10km_616_70_slo160.tif", gdalconst.GA_ReadOnly)
 
 print "img driver:", img.GetDriver().LongName
 print "img bands:", img.RasterCount
@@ -52,7 +53,7 @@ print "bnd datatype:", gdal.GetDataTypeName(b1_datatype)
 
 # ** open vector data
 
-lst_polys = access_pg.get_recs('where jis_id in (193112, 1455959)')
+lst_polys = access_pg.get_recs('where jis_id in (193112, 1922023)') #  , 1455959
 #print "polygons:", lst_polys
 for poly in lst_polys:
     #print poly
@@ -91,8 +92,15 @@ for poly in lst_polys:
 
     print "rasmini offsx {}, offsy {}, sizex {}, sizey {}".format(offs_e, offs_n, size_e, size_n)
     #             ReadRaster(xoff, yoff, xsize, ysize, buf_xsize=None, buf_ysize=None, buf_type=None, band_list=None)
-    ras_mini = b1.ReadRaster(0, 0, 1, 1, 1, 1, b1_datatype)
-    lst_pix_val = struct.unpack('f' * 1, ras_mini)
+    ras_mini = b1.ReadRaster(offs_e, offs_n, size_e, size_n, size_e, size_n, b1_datatype)
+    lst_pix_val = struct.unpack('f' * (size_e * size_n), ras_mini)
+    print lst_pix_val
+
+    ################################# get a test pix
+    size_e, size_n = (1,1)
+    offs_e, offs_n = (0,0)
+    ras_mini = b1.ReadRaster(offs_e, offs_n, size_e, size_n, size_e, size_n, b1_datatype)
+    lst_pix_val = struct.unpack('f' * (size_e * size_n), ras_mini)
     print lst_pix_val
 
     # turn into appropriate PostGIS-raster data/format/type
