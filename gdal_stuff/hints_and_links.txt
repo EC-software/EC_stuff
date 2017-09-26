@@ -3,3 +3,5 @@ NumPy::
 https://docs.scipy.org/doc/numpy-1.13.0/reference/routines.statistics.html
 https://docs.scipy.org/doc/numpy-1.13.0/reference/maskedarray.baseclass.html#numpy.ma.MaskedArray
 
+gdal-raster::
+http://geoinformaticstutorial.blogspot.dk/2012/09/reading-raster-data-with-python-and-gdal.html

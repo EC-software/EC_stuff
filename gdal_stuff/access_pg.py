@@ -64,7 +64,7 @@ def get_recs(where = ''):
         where = 'LIMIT 6' # If no where clause is specified, just show me top 6
     try:
         cursor = conn.cursor('cursor_unique_name', cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute("SELECT * FROM {}.{} {}".format(schem, table, where))
+        cursor.execute("SELECT jis_id, ST_AsBinary(geom) FROM {}.{} {}".format(schem, table, where))
     except psycopg2.ProgrammingError as e:
         print "Can't fetch curser..."
         print e
@@ -72,7 +72,7 @@ def get_recs(where = ''):
 
     lst_ret = list()
     for row in cursor:
-        print "{}".format(row)
+        #print "{}".format(row)
         lst_ret.append(row)
     return lst_ret
 
