@@ -32,16 +32,18 @@ print "img geotrans: w-e pixel resolution               ", geotrans[1]
 pixse = geotrans[1]
 print "img geotrans: rotation, 0 if image is 'north up' ", geotrans[2]
 print "img geotrans: n for top left x,y                 ", geotrans[3]
+tl_n = geotrans[3]
 print "img geotrans: rotation, 0 if image is 'north up' ", geotrans[4]
 print "img geotrans: n-s pixel resolution               ", geotrans[5]
 pixsn = -1 * geotrans[5]
 
 # tl: Top left of image, ll: Lower left of img
 ##print "ll_n = {} - ({} * {})".format(tl_e, img.RasterYSize, pixsn)
-ll_n = geotrans[3] - (img.RasterYSize * pixsn) #  tl_x - (number_of_rows * cellsize_e)
+ll_n = tl_n - (img.RasterYSize * pixsn) #  tl_x - (number_of_rows * cellsize_e)
 ll_e = tl_e  # ll_e = tl_e :-)
 ##print "ll (e,n): {}, {}".format(ll_e, ll_n)
 ##print "Expect:   ~{}, ~{}".format(440000, 6050000)
+
 
 b1 = img.GetRasterBand(1)
 b1_datatype = b1.DataType
@@ -82,10 +84,12 @@ for poly in lst_polys:
     # The buf_xsize, buf_ysize values are the size of the resulting buffer.
     # So you might say "0,0,512,512,100,100" to read a 512x512 block at the top left of the image into a 100x100 buffer (downsampling the image).
 
-    ##print "({} - {}) / {}".format(env_min_e, ll_e, pixse)
+    ##print "({} - {}) / {}".format(env_min_e, ll_e, pixse) - Works in both LL- and TL-centric unicerse...
     offs_e = int(round( (env_min_e - ll_e) / pixse ))
-    ##print "({} - {}) / {}".format(env_min_n, ll_n, pixsn)
-    offs_n = int(round( (env_min_n - ll_n) / pixsn ))
+    ##print "({} - {}) / {}".format(env_min_n, ll_n, pixsn) - Works in a LL-centruc unicerse...
+    #offs_n = int(round( (env_min_n - ll_n) / pixsn ))
+    ##print "({} - {}) / {}".format(env_min_n, ll_n, pixsn) - Works in a TL-centruc unicerse...
+    offs_n = int(round( (tl_n - env_max_n) / pixsn ))  # in the TL-centric univ. this is must be TL corner of envelope.
 
     size_e = int(round( (env_max_e - env_min_e) / pixse ))
     size_n = int(round( (env_max_n - env_min_n) / pixsn ))
@@ -96,12 +100,12 @@ for poly in lst_polys:
     lst_pix_val = struct.unpack('f' * (size_e * size_n), ras_mini)
     print lst_pix_val
 
-    ################################# get a test pix
-    size_e, size_n = (1,1)
-    offs_e, offs_n = (0,0)
-    ras_mini = b1.ReadRaster(offs_e, offs_n, size_e, size_n, size_e, size_n, b1_datatype)
-    lst_pix_val = struct.unpack('f' * (size_e * size_n), ras_mini)
-    print lst_pix_val
+    # ################################# get a test pix
+    # size_e, size_n = (1,1)
+    # offs_e, offs_n = (0,0)
+    # ras_mini = b1.ReadRaster(offs_e, offs_n, size_e, size_n, size_e, size_n, b1_datatype)
+    # lst_pix_val = struct.unpack('f' * (size_e * size_n), ras_mini)
+    # print lst_pix_val
 
     # turn into appropriate PostGIS-raster data/format/type
 
