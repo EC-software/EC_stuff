@@ -14,7 +14,7 @@ for dirpath, dnames, fnames in os.walk(str_chaos):
     for f in fnames:
         for hit in dic_bab:
             for pat in dic_bab[hit]:
-                if all([tag in f for tag in pat]):
+                if all([tag.lower() in f.lower() for tag in pat]):
                     print "Hit: [{}] {} > {}".format(hit, pat, f)
                     lst_suc.append((hit, pat, (os.path.join(dirpath, f)), f.replace(' ','_')))
 lst_suc.sort()
@@ -40,4 +40,7 @@ for suc in lst_suc:
             print "moved: {}".format(suc[3])
         except:
             pass
+
+    else:
+        print "File exists: {}".format(str_new)
 
