@@ -1,6 +1,10 @@
 import os
 import pickle
 
+import dic_bab_update
+
+dic_bab_update.define()
+
 str_ossep = "/"
 str_order = "/home/output/.TMP/NAM" # """./"
 str_chaos = "/home/output/.TMP/NEWS" # """./"
@@ -8,6 +12,8 @@ str_fn = 'dic_bab.ecp'
 
 with open(str_fn, 'rb') as handle:
     dic_bab = pickle.load(handle)
+
+print "dic_bab_length:", len(dic_bab.keys())
 
 lst_suc = list()
 for dirpath, dnames, fnames in os.walk(str_chaos):
