@@ -74,7 +74,7 @@ class Base(object):
             fil_load.close()
         except:
             print "{} Can't load data from file: {}".format(__file__, self._filen)
-            return 201
+            return 221
         # Check some dic_load vitals...
         if isinstance(dic_load, dict):
             if 'datatype' in dic_load.keys():
@@ -90,19 +90,19 @@ class Base(object):
                             self._valid = dic_load['valid']
                         else:
                             print "{} Can't load file: {} since it's version {}".format(__file__, self._filen, dic_load['version'])
-                            return 206
+                            return 226
                     else:
                         print "{} Can't load file: {} since it has no version".format(__file__, self._filen)
-                        return 205
+                        return 225
                 else:
                     print "{} Can't load file: {} due to datatype ECPWB != {}".format(__file__, self._filen, dic_load['datatype'])
-                    return 204
+                    return 224
             else:
                 print "{} Can't load file: {} since it has no datatype".format(__file__, self._filen)
-                return 203
+                return 223
         else:
             print "{} Can't load file: {} since it dosn't seem to contain a dict()".format(__file__, self._filen)
-            return 202
+            return 222
         return 0
 
     def _validate(self):
@@ -129,13 +129,12 @@ class Base(object):
             ret_load = json.loads(str_ret)
             if ret_load == dic_upd:
                 print "JSON Update is identical"
+                return 0
             else:
                 print "!!! Error on reload: JSON"
                 if json_load == str_ret:
                     print "    but json == json, so it's likely just caused by non-string keys in input"
                 return 230
-
-        return 0
 
     def add(self, str_key, dic_add):
         """ Add an identity to an existing .ecpwb file
@@ -148,21 +147,21 @@ class Base(object):
                         self._dicdb[str_key] = dic_add
                     else:
                         print "Can't add identity because it contains key(s) that are not string"
-                        return 224
+                        return 244
                 else:
                     print "Can't add identity because key all readay exists: {}".format(str_key)
-                    return 223
+                    return 243
             else:
                 print "Can't add identity because it's not a dictionary, its: {}".format(str(type(dic_add)))
-                return 222
+                return 242
         else:
             print "Can't add identity because the key in not string, its: {}".format(str(type(str_key)))
-            return 221
+            return 241
         self._upd()
         return 0
 
     def get(self, str_key, str_inner_key):
-        """ Retrieve an identity from an existing .ecpwb file """
+        """ Retrieve a value by key from an identity from an existing .ecpwb file """
         if isinstance(str_key, str):
             if isinstance(str_inner_key, str):
                 if str_key in self._dicdb.keys():
@@ -183,7 +182,7 @@ class Base(object):
 
 
     def set(self, str_key, str_inner_key, inner_val):
-        """ Write (overwrite if exists) an identity to an existing .ecpwb file """
+        """ Write (overwrite if exists) a value by key, to an identity to an existing .ecpwb file """
         dic_set = self.get(str_key, str_inner_key)
         if isinstance(str_inner_key, str):
             dic_set[str_inner_key] = inner_val
@@ -191,7 +190,7 @@ class Base(object):
             return 0
         else:
             print "None-string type in key: {} in {}".format(str_inner_key, str_key)
-            return 240
+            return 260
 
     def rem(self, str_key):
         """ Remove an identity from an existing .ecpwb file """
@@ -201,3 +200,4 @@ class Base(object):
             return 0
         else:
             print "Can't remove key: {}, because it's not there...".format(str_key)
+            return 270
