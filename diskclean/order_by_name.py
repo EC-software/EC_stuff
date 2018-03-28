@@ -6,8 +6,8 @@ import dic_bab_update
 dic_bab_update.define()
 
 str_ossep = "/"
-str_order = "/home/output/.TMP/NAM" # """./"
-str_chaos = "/home/output/.TMP/NEWS" # """./"
+str_order = "/home/output/.TMP/NAM" # "./" # "/media/veracrypt1/NAM" #
+str_chaos = "/home/output/.TMP/NEWS" # """./" # "/media/veracrypt1/NEWS" #
 str_fn = 'dic_bab.ecp'
 
 with open(str_fn, 'rb') as handle:
