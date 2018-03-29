@@ -15,6 +15,7 @@ Note: As we are using json all items must be string!!!
 
 ToDo:
     Consider placing this file in: /usr/lib/python2.7/site-packages/
+    Consider using shelve (or marshal), rather than JSON?
     Add logging
     Add encryption
 """
