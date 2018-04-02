@@ -1,6 +1,12 @@
+
 import os
-from os.path import join, getsize
-for root, dirs, files in os.walk('/home/martin'):
-    print root, "consumes",
-    print sum(getsize(join(root, name)) for name in files),
-    print "bytes in", len(files), "non-directory files"
+
+# Set the directory you want to start from
+rootDir = '/home/martin/GISfun'
+for dirName, subdirList, fileList in os.walk(rootDir):
+    print('Found directory: %s' % dirName)
+    if len(fileList) > 0:
+        for fname in fileList:
+            print(' --> %s' % fname)
+    else:
+        print " --- No files here..."
