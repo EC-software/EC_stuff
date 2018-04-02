@@ -2,7 +2,7 @@
 
 lst_suspects = list()
 #lst_suspects.extend(['password', 'passw', 'pword', 'pw '])
-lst_suspects.extend(['krakselikroks', 'qwertyuiop'])
+lst_suspects.extend(['ovod.'])
 str_root = r"/home/martin/PycharmProjects"
 lst_skip_ext = ['html', 'jpg', 'pack', 'las', 'shp', 'shx']
 
