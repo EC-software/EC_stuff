@@ -11,7 +11,7 @@ Maintain .ecdir file of a dir
 
 import os, sys
 import argparse
-import pickle
+import pickle  # was used before json
 import json
 import datetime
 import ec_hash
@@ -44,35 +44,6 @@ def ecdic_load(str_fn):
     #obj_ret = pickle.load(open(str_fn, "rb"))
     obj_ret = json.load(open(str_fn, "rb"))
     return obj_ret
-
-
-def dir_2_dic(str_root, verbose, exeptions=('.7z', '.csmsp')):
-    dic_ret = dict()
-    if verbose >= VERBOSE_CHATTY:
-        print("dir_2_dic root:", str_root)
-    for dirpath, dnames, fnames in os.walk(str_root):
-        for f in fnames:
-            if os.path.isdir(f):
-                print("DIR: ",f)
-            if f == '.ecdir':
-                continue
-            if any([f.endswith(ext) for ext in exeptions]):
-                continue
-            else:
-                str_fullpath = os.path.join(dirpath, f)
-                statinfo = os.stat(str_fullpath)
-                if statinfo.st_size < NUM_MIN_SIZE:  # True: #
-                    hash = 'md5_hash'  # ec_hash.file_hash(str_fullpath, 'md5')
-                    dic_ret[str_fullpath] = dict()
-                    dic_ret[str_fullpath]['path'] = dirpath
-                    dic_ret[str_fullpath]['name'] = f
-                    dic_ret[str_fullpath]['size'] = statinfo.st_size
-                    dic_ret[str_fullpath]['time'] = str(datetime.datetime.fromtimestamp(statinfo.st_mtime))
-                    dic_ret[str_fullpath]['hash'] = hash
-                    if verbose >= VERBOSE_CHATTY:
-                        pass#print str_fullpath, hash
-    print("Keys:", len(dic_ret.keys()))
-    return dic_ret
 
 
 def init(str_dir):
@@ -115,28 +86,30 @@ def init(str_dir):
                 lst_onlyfiles.append(ffn)
             elif os.path.isdir(ffn):
                 lst_onlydirs.append(ffn)
-    print(" dirs:", lst_onlydirs)
-    print(" fils:", lst_onlyfiles)
-
+    #print(" dirs:", lst_onlydirs)
+    #print(" fils:", lst_onlyfiles)
     # Handle the local files
     _init1(str_dir, lst_onlyfiles)
-
     # Handle sub-dirs
     if args['recursive']:
         for sdir in lst_onlydirs:
             init(sdir)
-    # # Chec the file by reading it back in...
-    # ret_load = ecdic_load(dir+r'/.ecdir', verbose)
-    # if ret_load == dic_dir:
-    #     if verbose >= VERBOSE_INFO:
-    #         print "Pickle is identical"
-    # else:
-    #     if verbose > VERBOSE_SILENT:
-    #         print "!!! Error on reload: Pickle"
-    # return
+    return
 
-def status(dir):
-
+def status(str_root):
+    """ Status """
+    print("Status for:", str_root)
+    # Collect all .ecdir
+    if not args['recursive']:
+        dic_col = ecdic_load(os.path.join(str_root, '.ecdir'))
+    else:
+        dic_col = dict()
+        for root, dirs, files in os.walk(str_root):
+            for fn in files:
+                if fn.endswith('.ecdir'):
+                    print("- collecting:", os.path.join(root, fn))
+                    dic_col[os.path.join(root, fn)] = ()
+    # Do stats on collection
     return
 
 def duplic(lst_dir):
@@ -150,7 +123,6 @@ def duplic(lst_dir):
         if ecdir:  # This basically assumes ecdir_load() returns False on fail... Check that XXX
             # travers the .ecdir, collect info
             for fil in ecdir.keys():
-                ##print "FIL:", fil, ecdir[fil]
                 if not ecdir[fil]['hash'] in dic_duplis.keys():
                     dic_duplis[ecdir[fil]['hash']] = [ecdir[fil]]
                 else:
@@ -186,7 +158,7 @@ if __name__ == "__main__":
         print(args)
 
     # Checks input sanity...
-    if (args['init'] or args['redunt'] or args['status'] or args['update']) and not os.path.isdir(args['directory']):
+    if (args['init'] or args['status'] or args['update']) and not os.path.isdir(args['directory']):
         print("Directory NOT found:", args['directory'])
         sys.exit()
 
@@ -194,9 +166,9 @@ if __name__ == "__main__":
     if args['init']: # Initialize the .ecdir
         init(args['directory'])
     elif args['status']: # Show state of a dir compared to it's .ecdir
-        status()
+        status(args['directory'])
     elif args['update']:# Update the .ecdir to reflect the current state of the dir
-        update()
+        update(args['directory'])
     else:
         if args['verbose'] > VERBOSE_SILENT:
             print("Unknown node... You should never see this!")
