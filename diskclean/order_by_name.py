@@ -1,5 +1,6 @@
 import os
 import pickle
+import re
 
 import dic_bab_update
 
@@ -9,6 +10,10 @@ str_ossep = "/"
 str_order = "/home/output/.TMP/NAM" # "./" # "/media/veracrypt1/NAM" #
 str_chaos = "/home/output/.TMP/NEWS" # """./" # "/media/veracrypt1/NEWS" #
 str_fn = 'dic_bab.ecp'
+
+def get_trailing_number(s):
+    m = re.search(r'\d+$', s)
+    return int(m.group()) if m else None
 
 with open(str_fn, 'rb') as handle:
     dic_bab = pickle.load(handle)
@@ -40,7 +45,7 @@ for suc in lst_suc:
     print str_new
     if not os.path.isfile(str_new):
 
-        # Rename
+        # Rename / Move
         try:
             os.rename(str_old, str_new)
             print "moved: {}".format(suc[3])
@@ -49,4 +54,21 @@ for suc in lst_suc:
 
     else:
         print "File exists: {}".format(str_new)
+        if '.' in str_new:
+            done = False
+            while not done:
+                str_lft, str_rgt = str_new.rsplit('.', 1)
+                num_tail = get_trailing_number(str_lft)
+                if num_tail:
+                    str_lft = str_lft[:-len(str(num_tail))] + str(num_tail+1)  # Up the number by 1
+                else:
+                    str_lft = str_lft[:-len(str(num_tail))] + str(1)  # just put a 1 in the ind
+                str_new = str_lft + '.' + str_rgt
+                try:
+                    os.rename(str_old, str_new)
+                    print "renamed: {}".format(str_new)
+                    done = True
+                except:
+                    pass
 
+# File exists: /home/output/.TMP/NAM/Penny_Pax/Penny_Pax-SAS_-_Pornhubcom.mp4
