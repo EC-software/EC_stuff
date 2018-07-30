@@ -2,7 +2,8 @@
 
 lst_suspects = list()
 #lst_suspects.extend(['password', 'passw', 'pword', 'pw '])
-lst_suspects.extend(['Cinfadel', 'elefant'])
+lst_suspects.extend(['Cinfadel', 'Zyra'])
+lst_suspects.extend(['myrica', 'fiveb', 'ovod.', 'Flipper', 'flipper', 'psycopg2.connect', 'bbbbb', 'bix_user', 'b004218', 'mahvi'])
 str_root = r"/home/martin/PycharmProjects"
 lst_skip_ext = ['html', 'jpg', 'pack', 'las', 'shp', 'shx']
 
