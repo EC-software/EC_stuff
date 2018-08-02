@@ -43,12 +43,10 @@ ToDo:
     Consider using shelve (or marshal), rather than JSON?
 """
 
-    **** Discontinued - Moved to ecpw ****
-
 import os.path
 import json
 
-class Base(object):
+class Store(object):
     """ Storing identity user-names, passwords and other info in a safe place...
     Error codes:
         100-199: Internal code logic fail
@@ -58,35 +56,35 @@ class Base(object):
     ECPW_DATATYPE = "ECPW"
     ECPW_VERSION = "0.1"
 
-    def __init__(self, str_filename, crypt="None"):
-        self._version = self.ECPW_VERSION
-        self._filen = str_filename
+    def __init__(self, str_filename=None, crypt=None):
+        if not str_filename:
+            str_filename = os.path.expanduser("~")+"/.ecpw"
+        #self._datatype = self.ECPW_DATATYPE # For compatibility check
+        #self._version = self.ECPW_VERSION # For compatibility check
+        self._filen = str_filename  # So it knows where to dump itself...
         self._crypt = crypt  # No encryption supported, yet
-        self._dicdb = dict()
-        self._empty = True
-        self._valid = True
+        self._base = dict()  # The actual contents
         if not os.path.isfile(self._filen):
             self._new_file()
         else:
             self._load_file()
 
+    # internal/private commands
     def _new_file(self):
         """ Initializes a new .ecpwb file """
-        dic_new = dict()
-        dic_new['datatype'] = self.ECPW_DATATYPE
-        dic_new['version'] = self._version
-        dic_new['filen'] = self._filen
-        dic_new['crypt'] = self._crypt
-        dic_new['dicdb'] = self._dicdb
-        dic_new['empty'] = self._empty
-        dic_new['valid'] = self._valid
-        json_load = json.dumps(dic_new, sort_keys=True, indent=4)
+        dic_out = dict()
+        dic_out['ecpw_datatype'] = self.ECPW_DATATYPE # For compatibility check
+        dic_out['ecpw_version'] = self.ECPW_VERSION # For compatibility check
+        #dic_out['filen'] = self._filen
+        dic_out['crypt'] = self._crypt
+        dic_out['base'] = self._base
+        json_load = json.dumps(dic_out, sort_keys=True, indent=4)
         with open(self._filen, "w") as fil:
             fil.write(json_load)
         with open(self._filen, "r") as fil:
             str_ret = fil.read()
         ret_load = json.loads(str_ret)
-        if ret_load == dic_new:
+        if ret_load == dic_out:
             print "New file created successfully"
         else:
             print "!!! Error on reload new file 1:1 {}".format(self._filen)
@@ -102,21 +100,17 @@ class Base(object):
             dic_load = json.load(fil_load)
             fil_load.close()
         except:
-            print "Can't load data from file: {}".format(self._filen)
+            print "Can't load data from file: {} \nPlease check if file is empty...".format(self._filen)
             return 221
         # Check some dic_load vitals...
         if isinstance(dic_load, dict):
-            if 'datatype' in dic_load.keys():
-                if dic_load['datatype'] == self.ECPW_DATATYPE:
-                    if 'version' in dic_load.keys():
-                        if dic_load['version'] == self.ECPW_VERSION:
+            if 'ecpw_datatype' in dic_load.keys():
+                if dic_load['ecpw_datatype'] == self.ECPW_DATATYPE:
+                    if 'ecpw_version' in dic_load.keys():
+                        if dic_load['ecpw_version'] == self.ECPW_VERSION:
                             # Load the data
-                            self._version = dic_load['version']
-                            self._filen = dic_load['filen']
                             self._crypt = dic_load['crypt']  # No encryption supported, yet
-                            self._dicdb = dic_load['dicdb']
-                            self._empty = dic_load['empty']
-                            self._valid = dic_load['valid']
+                            self._base = dic_load['base']
                         else:
                             print "{} Can't load file: {} since it's version {}".format(__file__, self._filen, dic_load['version'])
                             return 226
@@ -150,8 +144,8 @@ class Base(object):
         :param ident:
         :return:
         """
-        if isinstance(ident, dict):
-            if all([self._validate_key(keyi) for keyi in ident.keys()]):
+        if isinstance(ident, str) and isinstance(self._base[ident], dict):
+            if all([self._validate_key(keyi) for keyi in self._base[ident].keys()]):
                 return True
             else:
                 print "identity Failed validation (2), it has invalid key"
@@ -162,8 +156,8 @@ class Base(object):
 
     def _validate_store(self):
         """ Validate the self 'store' objects with some sanity checks """
-        if isinstance(self._dicdb, dict):
-            if all([self._validate_identity(ident) for ident in self._dicdb]):
+        if isinstance(self._base, dict):
+            if all([self._validate_identity(ident) for ident in self._base]):
                 return True
             else:
                 print "store Failed validaton, it has invalid itentity"
@@ -172,28 +166,14 @@ class Base(object):
             print "store Failed validatain, it's not a dictionary"
             return False
 
-    def print_raw(self):
-        store = self._dicdb
-        print "< store:", str(type(store))
-        if isinstance(store, dict):
-            for keyi in store.keys():
-                iden = store[keyi]
-                print "<  iden:", str(type(iden)), keyi
-                for keyj in iden.keys():
-                    print "<  k-v: ({}, {}) =  {}, {}".format(str(type(keyj)),str(type(iden[keyj])),iden.keyi[keyj])
-
     def _upd_file(self):
-        """ Update an existing .ecpwb file, with current self._dicdb """
-        self._validate_store()
-        if self._valid:
+        """ Update an existing .ecpwb file, with current self. """
+        if self._validate_store():
             dic_upd = dict()
-            dic_upd['datatype'] = self.ECPW_DATATYPE
-            dic_upd['version'] = self._version
-            dic_upd['filen'] = self._filen
+            dic_upd['ecpw_datatype'] = self.ECPW_DATATYPE
+            dic_upd['ecpw_version'] = self.ECPW_VERSION
             dic_upd['crypt'] = self._crypt
-            dic_upd['dicdb'] = self._dicdb
-            dic_upd['empty'] = self._empty
-            dic_upd['valid'] = self._valid
+            dic_upd['base'] = self._base
             json_load = json.dumps(dic_upd, sort_keys=True, indent=4)
             with open(self._filen, "w") as fil:
                 fil.write(json_load)
@@ -211,6 +191,17 @@ class Base(object):
         else:
             print "Can't update file, because store is not valid."
 
+    # store level commands
+    def print_raw(self):
+        store = self._base
+        print "< store:", str(type(store))
+        if isinstance(store, dict):
+            for keyi in store.keys():
+                iden = store[keyi]
+                print "<  iden:", str(type(iden)), keyi
+                for keyj in iden.keys():
+                    print "<  k-v: ({}, {}) =  {}, {}".format(str(type(keyj)),str(type(iden[keyj])),iden.keyi[keyj])
+
     # identity level commands
     def lst(self):
         """ List all 'identities' in the store """
@@ -222,9 +213,9 @@ class Base(object):
         and the identity-key cant be on all ready used in self."""
         if isinstance(str_key, str):
             if isinstance(dic_add, dict):
-                if not str_key in self._dicdb.keys():
+                if not str_key in self._base.keys():
                     if all([isinstance(key_i, str) for key_i in dic_add.keys()]):
-                        self._dicdb[str_key] = dic_add
+                        self._base[str_key] = dic_add
                     else:
                         print "Can't add identity because it contains key(s) that are not string"
                         return 244
@@ -241,8 +232,8 @@ class Base(object):
 
     def rem(self, str_key):
         """ Remove an identity from an existing .ecpwb file """
-        if str_key in self._dicdb.keys():
-            del self._dicdb[str_key]
+        if str_key in self._base.keys():
+            del self._base[str_key]
             self._upd_file()
             return 0
         else:
@@ -254,9 +245,9 @@ class Base(object):
         """ Retrieve a value by key from an identity from an existing .ecpwb file """
         if isinstance(str_key, str):
             if isinstance(str_inner_key, str):
-                if str_key in self._dicdb.keys():
-                    if str_inner_key in self._dicdb[str_key].keys():
-                        return self._dicdb[str_key][str_inner_key]
+                if str_key in self._base.keys():
+                    if str_inner_key in self._base[str_key].keys():
+                        return self._base[str_key][str_inner_key]
                     else:
                         print "Can't find key: {} in {}".format(str_inner_key, str_key)
                         return None
@@ -269,6 +260,12 @@ class Base(object):
         else:
             print "None-string type in key: {}".format(str_key)
             return None
+
+    def gets(self, str_key, lst_inner_keys):
+        lst_ret = list()
+        for keyi in lst_inner_keys:
+            lst_ret.append(self.get(str_key, keyi))
+        return lst_ret
 
     def set(self, str_key, str_inner_key, inner_val):
         """ Write (overwrite if exists) a value by key, to an identity to an existing .ecpwb file """

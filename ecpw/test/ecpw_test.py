@@ -1,6 +1,4 @@
 
-* *** Discontinued - Moved to ecpw * ***
-
 import ecpasswordbase
 
 ecp = ecpasswordbase.Base(r"/home/martin/Private/Secrets.ecpwb")
