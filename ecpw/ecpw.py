@@ -58,7 +58,10 @@ class Store(object):
 
     # internal/private commands
     def _new_file(self):
-        """ Initializes a new .ecpwb file """
+        """
+        Initializes a new .ecpwb file
+        :return: TBD
+        """
         dic_out = dict()
         dic_out['ecpw_datatype'] = self.ECPW_DATATYPE # For compatibility check
         dic_out['ecpw_version'] = self.ECPW_VERSION # For compatibility check
@@ -79,7 +82,10 @@ class Store(object):
             return 210
 
     def _load_file(self):
-        """ Load an existing .ecpwb file """
+        """
+        Load an existing .ecpwb file
+        :return:
+        """
         # try to load info from file
         try:
             fil_load = open(self._filen, 'rb')
@@ -156,7 +162,10 @@ class Store(object):
             return False
 
     def _upd_file(self):
-        """ Update an existing .ecpwb file, with current self. """
+        """
+        Update an existing .ecpwb file, with current self.
+        :return:
+        """
         if self._validate_store():
             dic_upd = dict()
             dic_upd['ecpw_datatype'] = self.ECPW_DATATYPE
@@ -182,6 +191,11 @@ class Store(object):
 
     # store level commands
     def print_raw(self):
+        """
+        Prints the raw (data) base, for manual inspection.
+        Only intended for debugging purposes
+        :return:
+        """
         store = self._base
         print("< store:", str(type(store)))
         if isinstance(store, dict):
@@ -200,9 +214,14 @@ class Store(object):
         return self._base.keys()
 
     def add(self, str_ident, dic_add):
-        """ Add an identity to an existing .ecpwb file
+        """
+        Add an identity to an existing .ecpwb file
         the identity must be in form of a dictionary, with all string keys.
-        and the identity-key cant be on all ready used in self."""
+        and the identity-key cant be on all ready used in self.
+        :param str_ident:
+        :param dic_add:
+        :return:
+        """
         if isinstance(str_ident, str):
             if isinstance(dic_add, dict):
                 if not str_ident in self._base.keys():
@@ -223,7 +242,11 @@ class Store(object):
         self._upd_file()
 
     def rem(self, str_ident):
-        """ Remove an identity from an existing .ecpwb file """
+        """
+        Remove an identity from an existing .ecpwb file
+        :param str_ident:
+        :return:
+        """
         if str_ident in self._base.keys():
             del self._base[str_ident]
             self._upd_file()
@@ -234,7 +257,12 @@ class Store(object):
 
     # key level commands
     def get(self, str_ident, str_inner_key):
-        """ Returns a value by key from an identity from an existing .ecpwb file """
+        """
+        Returns a value by key from an identity from an existing .ecpwb file
+        :param str_ident:
+        :param str_inner_key:
+        :return:
+        """
         if isinstance(str_ident, str):
             if isinstance(str_inner_key, str):
                 if str_ident in self._base.keys():
@@ -266,7 +294,13 @@ class Store(object):
         return lst_ret
 
     def set(self, str_ident, str_inner_key, inner_val):
-        """ Write (overwrite if exists) a value by key, in an identity, in an existing .ecpwb file """
+        """
+        Write (overwrite if exists) a value by key, in an identity, in an existing .ecpwb file
+        :param str_ident:
+        :param str_inner_key:
+        :param inner_val:
+        :return:
+        """
         dic_set = self.get(str_ident, str_inner_key)
         if isinstance(str_inner_key, str):
             dic_set[str_inner_key] = inner_val
