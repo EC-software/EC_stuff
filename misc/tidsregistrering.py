@@ -1,4 +1,6 @@
 
+""" Giving you the numbers you need for tidsregistrering. """
+
 import datetime
 
 NORMAL_HOURS = 7.5
