@@ -57,6 +57,7 @@ for suc in lst_suc:
         if '.' in str_new:
             done = False
             while not done:
+                print ">",
                 str_lft, str_rgt = str_new.rsplit('.', 1)
                 num_tail = get_trailing_number(str_lft)
                 if num_tail:
@@ -68,7 +69,5 @@ for suc in lst_suc:
                     os.rename(str_old, str_new)
                     print "renamed: {}".format(str_new)
                     done = True
-                except:
+                except:  # More specific error handeling here <---------------------------------------
                     pass
-
-# File exists: /home/output/.TMP/NAM/Penny_Pax/Penny_Pax-SAS_-_Pornhubcom.mp4
