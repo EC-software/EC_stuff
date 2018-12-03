@@ -15,4 +15,4 @@ def file_hash(filename, mode='sha256'):
 
 
 if __name__ == "__main__":
-    print file_hash(__file__)
+    print(file_hash(__file__))
