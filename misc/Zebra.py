@@ -69,7 +69,7 @@ for col in colours:
                                                                             if dri.index('water') == (mus.index('classic') + 1) or dri.index('water') == (mus.index('classic') - 1):
                                                                                 #print col, nat, dri, mus, pez
                                                                                 cnt += 1
-                                                                                print "The Zebra is owned by the: {}".format(nat[pez.index('zebra')])
+                                                                                print("The Zebra is owned by the: {}".format(nat[pez.index('zebra')]))
 
 
-print "Number of valid solutions: {}".format(cnt)
+print("Number of valid solutions: {}".format(cnt))
