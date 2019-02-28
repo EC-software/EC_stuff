@@ -1,6 +1,9 @@
 
 """ Giving you the numbers you need for tidsregistrering. """
 
+
+XXX Moved to repo: ec_times XXX
+
 import datetime
 
 NORMAL_HOURS = 7.5

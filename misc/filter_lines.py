@@ -2,7 +2,7 @@ import os
 import sys
 
 rootdir = sys.argv[1]
-target = "Scandinavia"
+target = "Rota"
 
 print(rootdir)
 with open("filter_lines_out", "w") as filo:
