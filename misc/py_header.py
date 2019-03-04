@@ -40,4 +40,4 @@ for root, dirs, files in os.walk(str_root_dir):
 print("Looked in {} files".format(cnt_files))
 #lst_hdrs = cd.by_cnt()
 for lst_hdr in cd.by_cnt():
-    print lst_hdr
+    print(lst_hdr)
