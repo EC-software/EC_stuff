@@ -10,4 +10,4 @@ new_d = pickle.load(file2)
 file2.close()
 
 #print dictionary object loaded from file
-print "returned:", new_d
+print("returned:", new_d)
