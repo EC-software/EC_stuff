@@ -10,6 +10,6 @@ Line 15: print the values, so we can verify that it worked. Almost too easy...
 import ecpw
 ecs = ecpw.Store()
 
-db_ip, db_name, db_pw = ecs.gets('demo_db', ['ip', 'name', 'password'])
-
-print("For my work database: {}, use credentials: {} / {}".format(db_ip, db_name, db_pw))
+entry = 'demo_db'
+db_ip, db_name, db_pw = ecs.gets(entry, ['ip', 'name', 'password'])
+print("{} : {}, use credentials: {} / {}".format(entry, db_ip, db_name, db_pw))

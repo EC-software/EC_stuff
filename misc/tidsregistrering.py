@@ -68,8 +68,18 @@ for k in sorted(dic_workdays.keys()):
     else:
         print("{}\t...".format(k))
 
+## Frint the Flex-statistics
 print("\nFlex:")
 for k in sorted(dic_flex.keys()):
     print("Month {} = {} hours".format(k, round(sum(dic_flex[k])), 3))
+
+## Figure out when to go home today :-)
+dat_today = datetime.datetime.now().date()
+for k in dic_workdays.keys():
+    if k == dat_today:
+        dtt_first = sorted(dic_workdays[k])[0]
+        dtt_free = dtt_first + datetime.timedelta(hours=NORMAL_HOURS)
+        print("\nToday you can go home at: {}".format(str(dtt_free.time())[:5]))
+
 
 ### End of Python script ...
