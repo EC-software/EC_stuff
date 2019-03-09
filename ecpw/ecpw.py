@@ -48,6 +48,7 @@ class Store(object):
     def __init__(self, str_filename=None, crypt=None):
         if not str_filename:
             str_filename = os.path.expanduser("~")+"/.ecpw"
+        ##print("Relying on: {}".format(str_filename))
         self._filen = str_filename  # So it knows where to dump itself...
         self._crypt = crypt  # No encryption supported, yet
         self._base = dict()  # The actual contents
