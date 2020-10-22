@@ -1,6 +1,6 @@
 import datetime
 
-print "Solutions:"
+print("Solutions:")
 
 tim_beg = datetime.datetime.now()
 
@@ -12,7 +12,7 @@ for a in range(4):
                     if abs(b-a) == 1:
                         if abs(c-b) == 1:
                             if abs(d-c) == 1:
-                                print a, b, c, d
+                                print(a, b, c, d)
 
 tim_end = datetime.datetime.now()
-print "duration", tim_end-tim_beg
+print("duration", tim_end-tim_beg)
