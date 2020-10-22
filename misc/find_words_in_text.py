@@ -3,7 +3,7 @@ import os
 
 ROOT = r'C:\Users\22016\Martin\mega\Private'
 EXT = '.csv'
-WORDS = ['Martin Hvidberg']
+WORDS = ['Hvidberg', 'Grøndahl']
 
 def checkfor_words(lst_words, str_fn, mode='all'):
         lst_lines_found = list()
