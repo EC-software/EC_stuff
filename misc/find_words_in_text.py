@@ -1,7 +1,7 @@
 
 import os
 
-ROOT = r'C:\Users\22016\Martin\mega\Private'
+ROOT = r'/home/martin/MEGA/Private'
 EXT = '.csv'
 WORDS = ['Hvidberg', 'Grøndahl']
 
@@ -11,10 +11,6 @@ def checkfor_words(lst_words, str_fn, mode='all'):
         num_ln = 0
         for line in datafile:
             num_ln += 1
-            # for word in lst_words:
-            #     if word in line:
-            #         lst_lines_found.append((num_ln, line))
-            #         print(f"{word}: {num_ln} < {str_fn}")
             if mode == 'all':
                 if all([w in line for w in lst_words]):
                     print(f"all: {lst_words}: {num_ln} < {line.strip()}")
