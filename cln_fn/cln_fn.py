@@ -11,12 +11,15 @@ SUBST = {'$': 'S',
          '#': '_',
          "'": '_',
          '`': '',
+         '´': '',
+         '’': '',
          '(': '_',
          ')': '_',
          '+': '_',
          '=': '_',
          ',': '_',
          ':': '_',
+         ';': '_',
          '@': '_',
          '[': '_',
          ']': '_',
@@ -30,6 +33,7 @@ SUBST = {'$': 'S',
          'á': 'a',
          'ä': 'ae',
          'é': 'e',
+         'É': 'E',
          'è': 'e',
          'ê': 'e',
          'ü': 'u',
@@ -41,6 +45,7 @@ SUBST = {'$': 'S',
          'Å': 'AA',
          'ö': 'OE'
          }
+ROOT = "/home/output"   # /.TMP/NEWS_1"
 ZONEY = "/home/output/.TMP/NEWS_1"
 
 print(f"Valid: {VALID}")
@@ -49,7 +54,7 @@ print(f"Subst: {''.join(SUBST.keys())}")
 set_invalids = set()
 num_invalids = 0
 
-for root, dirs, files in os.walk("/home/output"):  # /.TMP/NEWS_1"):
+for root, dirs, files in os.walk(ROOT):
     path = root.split(os.sep)
     # print((len(path) - 1) * '---', os.path.basename(root))
     for file in files:
@@ -62,6 +67,13 @@ for root, dirs, files in os.walk("/home/output"):  # /.TMP/NEWS_1"):
                 print(f" ! {lst_bad}: {root}{os.sep}{file}")
             else:  # Make a swap
                 if root.startswith(ZONEY):
-                    print(f" swapping: {'x'}")
+                    newf = file
+                    for key_s in SUBST.keys():
+                        newf = newf.replace(key_s, SUBST[key_s])
+                    str_fno = root+os.sep+file
+                    str_fnn = root+os.sep+newf
+                    print(f"\n< {str_fno}\n> {str_fnn}")
+                    os.rename(str_fno, str_fnn)
+
 print(f"num: {num_invalids}")
 print(f"set: {sorted(list(set_invalids))}")
