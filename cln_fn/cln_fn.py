@@ -31,6 +31,7 @@ SUBST = {'$': 'S',
          '–': '-',  # apparently not a normal hyphen ...
          '—': '-',  # apparently not a normal hyphen ...
          'á': 'a',
+         'ã': 'a',
          'ä': 'ae',
          'é': 'e',
          'É': 'E',
