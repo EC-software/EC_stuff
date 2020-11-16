@@ -1,7 +1,7 @@
 
 import os
 
-ROOT = r'/home/martin/'  #r'C:\Users\22016'  # r'/home/martin/MEGA/Private'  #
+ROOT = r'D:\Lithium'  # r'/home/martin/MEGA/Private'  #r'/home/martin/'  #
 EXT = '*'  #'.csv'  #
 SKIP = ['.mp3', '.mp4', '.pdf',
         '.js', '.css', '.ashx',
@@ -34,6 +34,9 @@ def checkfor_words(lst_words, str_fn, mode='all'):
         except UnicodeDecodeError:
             pass
             # print(f" - UnicodeDecodeError: {str_fn}")
+        except PermissionError:
+            # pass
+            print(f" - PermissionError: {str_fn}")
         return lst_lines_found
 
 def main(str_root):
