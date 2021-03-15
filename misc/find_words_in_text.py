@@ -1,7 +1,7 @@
 
 import os
 
-ROOT = r'D:\Lithium'  # r'/home/martin/MEGA/Private'  #r'/home/martin/'  #
+ROOT = r'D:\\'  # r'/home/martin/MEGA/Private'  #r'/home/martin/'  #
 EXT = '*'  #'.csv'  #
 SKIP = ['.mp3', '.mp4', '.pdf',
         '.js', '.css', '.ashx',
@@ -9,7 +9,7 @@ SKIP = ['.mp3', '.mp4', '.pdf',
         '.ods', '.odt', '.xls', '.doc', '.docx',
         '.7z', '.exe', '.dll']  # SKIP only used if EXT == '*'
 MAXSIZE = 100000
-WORDS = ['Hvidberg', 'Grøndahl']
+WORDS = ['Marianne']
 
 def checkfor_words(lst_words, str_fn, mode='all'):
         num_ln = 0
@@ -65,9 +65,11 @@ def main(str_root):
                     # pass
                     print(f" - FileNotFoundError: {str_ffn}")
 
-            if num_cnt % 10000 == 0:
+            if num_cnt == 1 or num_cnt % 10000 == 0:
                 print(f"\tcnt: {num_cnt} - latest file: {os.path.join(root, file)}")
     print(f"\n {num_cnt} files scanned\n {num_hit} lines found")
 
 if __name__ == '__main__':
+
+    print(f"Start at: {ROOT} looking for {WORDS}")
     main(ROOT)
