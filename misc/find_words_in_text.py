@@ -1,7 +1,7 @@
 
 import os
 
-ROOT = r'D:\Lithium'  # r'/home/martin/MEGA/Private'  #r'/home/martin/'  #
+ROOT = r'/home/martin/'  #r'D:\Lithium'  # r'/home/martin/MEGA/Private'  #
 EXT = '*'  #'.csv'  #
 SKIP = ['.mp3', '.mp4', '.pdf',
         '.js', '.css', '.ashx',
