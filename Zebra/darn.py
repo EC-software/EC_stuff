@@ -1,4 +1,8 @@
+
 import itertools
+
+""" Playing with "Who owns the Zebra" """
+
 
 nat = {'a': 'English', 'b': 'Spanish', 'c': 'Ukraine', 'd': 'Norwegian', 'e': 'Japanese'}  # nationality
 col = {'a': 'red', 'b': 'green', 'c': 'ivory', 'd': 'yellow', 'e': 'blue'}  # colour

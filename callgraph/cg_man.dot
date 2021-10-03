@@ -1,0 +1,13 @@
+digraph {
+
+    subgraph cluster_A_full_run {
+        label="A full run";
+        A_full_run__start -> A_full_run__main;
+    }
+
+    subgraph cluster_ga_brightside {
+        label="ga brightside";
+        A_full_run__main -> ga_brightside__main;
+    }
+
+}
