@@ -11,4 +11,4 @@ cd.add('c')
 cd.add('c')
 cd.add(7913)
 
-print cd.by_cnt()
+print(cd.by_cnt())

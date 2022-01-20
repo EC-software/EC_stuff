@@ -8,7 +8,7 @@ SKIP = ['.mp3', '.mp4', '.pdf',
         '.jpg', '.png', '.gif',
         '.ods', '.odt', '.xls', '.doc', '.docx',
         '.7z', '.exe', '.dll']  # SKIP only used if EXT == '*'
-MAXSIZE = 100000
+MAXSIZE = 10000
 WORDS = ['Marianne']
 
 def checkfor_words(lst_words, str_fn, mode='all'):
