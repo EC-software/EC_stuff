@@ -5,7 +5,7 @@ import os
     For a given .py file. Find the start, and map all function calls, statically
     Just analyse the source, don't run it ... """
 
-str_in_ffn = r"/home/martin/PycharmProjects/ghapi/A_full_run.py"  # start file
+str_in_ffn = r"/home/martin/repos/oship/oship_kiss/ship_maintain/ship_luoti.py"  # start file
 str_root_dir = os.sep.join(str_in_ffn.split(os.sep)[:-1])
 
 print(f"root file: {str_in_ffn}")
@@ -24,6 +24,7 @@ def main(str_start_ffn):
     lst_dot = init_dot()
     print(f"init dot: {lst_dot}")
     with open(str_start_ffn, 'r') as fil_s:
+        print(f"reading file: {str_start_ffn}")
         lst_lines = [line.rstrip() for line in fil_s.readlines() if line != '\n']
     return lst_lines
 
