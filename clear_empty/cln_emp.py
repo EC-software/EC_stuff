@@ -4,8 +4,8 @@ import os
 import string
 # src_dir = "/media/veracrypt2/NCLN_3" # /.TMP/NEWS_1"):
 # ZONEY = "/media/veracrypt2/NCLN_3"
-src_dir = "/home/output/.TMP" # /.TMP/NEWS_1"):
-ZONEY = "/home/output/.TMP"
+src_dir = "/media/veracrypt1" # "/home/output/.TMP" # /.TMP/NEWS_1"):
+ZONEY = "/media/veracrypt1" # "/home/output/.TMP"
 
 for root, dirs, files in os.walk(src_dir):
     for file in files:
@@ -20,6 +20,6 @@ for dirpath, _, _ in os.walk(src_dir, topdown=False):
         break
     try:
         os.rmdir(dirpath)
-        print(f"rmdir: {dirpath}")
+        print(f"mkdir {dirpath}")
     except OSError as ex:
         pass  # print(f"Fail:: {ex}")
