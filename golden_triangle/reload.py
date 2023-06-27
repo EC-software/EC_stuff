@@ -4,7 +4,7 @@
 
 import os
 
-KNOWN_METHODS = ["os.", "xxx.", "cmd"]
+KNOWN_METHODS = ["os.", "shutil.", "cmd"]
 
 
 def movefile_byos(str_ffnfr, str_ffnto):
