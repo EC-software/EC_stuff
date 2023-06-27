@@ -2,6 +2,8 @@
 """ Reload the test data to initial situation,
     i.e. move all files from LAO and THA to MMR """
 
+# after git filter-repo --force --strip-blobs-bigger-than 10M
+
 import os
 
 KNOWN_METHODS = ["os.", "shutil.", "cmd"]
