@@ -18,6 +18,9 @@ log_file = "download_log.txt"
 
 def download_file(url, filename):
 
+    ffn_a = os.path.join(catch_dir, filename.rsplit(os.sep, 1)[1])
+    ffn_b = filename
+
     print(f"    init download_file({url}, {filename})")
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
@@ -26,20 +29,23 @@ def download_file(url, filename):
     options.add_argument("--disable-dev-shm-usage")
     dic_expprefs = {"download.default_directory": catch_dir, "download.prompt_for_download": False}
     options.add_experimental_option("prefs", dic_expprefs);
-
-    # service = Service(r"/usr/bin/chromedriver")  # Update with the path to your chromedriver executable
     ddriver = webdriver.Chrome()
-    print(f"    Download ddriver: {ddriver}")
-
     ddriver.get(url)
-    # ddriver.refresh()
-    time.sleep(time_2_wait_4_download)  # Allow time for the download to complete
-    print(f"    got page")
 
-    ffn_a = os.path.join(catch_dir, filename.rsplit(os.sep, 1)[1])
-    ffn_b = filename
+    print(f"    Wait for the download to complete while monitoring: {ffn_a}")
+    while True:
+        if os.path.exists(ffn_a):
+            break
+        time.sleep(1)
+    time.sleep(2)  # wait a few extra seconds to be safe ...
+    print(f"    completed: {url}")
     print(f"    move file: {ffn_a} -> {ffn_b}")
-    os.rename(ffn_a, ffn_b)
+    try:
+        os.rename(ffn_a, ffn_b)
+    except FileExistsError:
+        print(f"WTF: FileExists: {ffn_b} !!! ErrNo.1737")
+    except FileNotFoundError:
+        print("WTF: FileNotFoundError !!! ErrNo.1736")
 
     ddriver.quit()
 
