@@ -6,3 +6,6 @@ find_pw_in_files.py
 /golden_triangle/data/MMR/*
 /golden_triangle/data/THA/*
 /misc/data_pdf/*
+/wscrap/downloaded_files/*
+/wscrap/*.log
+/wscrap/download_log.txt
