@@ -59,7 +59,9 @@ SUBST = {   "'": '',
             'é': 'e',
             'ê': 'e',
             'ë': 'e',
+            'ё': 'e',
             'í': 'i',
+            'ñ': 'n',
             'ó': 'o',
             'ö': 'OE',
             'ø': 'oe',
@@ -70,10 +72,10 @@ SUBST = {   "'": '',
             'А': 'A',  # Russian?
             'Б': 'b',
             'В': 'B',  # Russian?
-            'Г': 'R',  # Russian?
+            'С': 'C',  # Russian?
             'Д': 'D',  # Russian?
             'Е': 'E',  # Russian?
-            'Ж': 'X',  # Russian?
+            'Л': 'N',  # Russian?
             'И': 'N',  # Russian?
             'Й': 'N',  # Russian
             'К': 'K',  # Russian?
@@ -82,40 +84,46 @@ SUBST = {   "'": '',
             'О': 'O',  # Russian?
             'П': 'N',
             'Р': 'P',  # Russian?
-            'С': 'C',  # Russian?
+            'Г': 'R',  # Russian?
+            'Я': 'R',  # Russian?
             'Т': 'T',
             'Ч': 'y',  # Russian?
             'Ш': 'W',
+            'Ж': 'X',  # Russian?
             'Ы': 'bl',  # Russian?
             'а': 'a',
-            'б': 'd',
+            'ь': 'b',
+            'Ь': 'b',
             'в': 'B',
-            'г': 'r',
             'д': 'D',
+            'б': 'd',
             'е': 'e',  # apparently not a normal e ...
-            'ж': 'X',
             'з': '3',
+            'Э': '3',
+            'э': '3',
+            'З': '3',
             'и': 'n',
             'й': 'n',
             'к': 'k',
             'л': 'r',
+            'ю': 'h',
+            'я': 'R',
             'м': 'M',
             'н': 'H',
             'о': 'o',
             'п': 'n',
             'р': 'p',
+            'г': 'r',
             'с': 'c',
             'т': 'T',
             'у': 'y',
             'ф': 'O',
             'х': 'x',
+            'ж': 'X',
             'ц': 'y',
             'ч': 'y',
             'ш': 'w',
             'ы': 'bl',
-            'ь': 'b',
-            'ю': 'h',
-            'я': 'R',
             '–': '-',  # apparently not a normal hyphen ...
             '—': '-',  # apparently not a normal hyphen ...
             '’': '',
@@ -140,8 +148,8 @@ SUBST = {   "'": '',
             '🎩': '',
             '🐇': ''}
 
-ROOT = "/media/veracrypt1"  # "/home/output/.TMP/"  # "/run/media/martin/SAMSUNG"   # /.TMP/NEWS_1"
-ZONEY = "/media/veracrypt1"
+ROOT = "/home/output/.TMP/"  # "/media/veracrypt1"  # "/run/media/martin/SAMSUNG"   # /.TMP/NEWS_1"
+ZONEY = "/home/output/.TMP/"  # "/media/veracrypt1"
 
 print(f"Valid: {VALID}")
 print(f"NoVal: {''.join(SUBST.keys())}")
@@ -160,17 +168,20 @@ for root, dirs, files in os.walk(ROOT):
             set_invalids.update(lst_bad)
             num_invalids += 1
             if any(c not in SUBST.keys() for c in lst_bad):
-                print(f" Bad char(s) {lst_bad}: {lst_cnv}: {root}{os.sep}{file}")
-            else:  # Make a swap
-                if root.startswith(ZONEY):
-                    newf = file
-                    for key_s in SUBST.keys():
-                        newf = newf.replace(key_s, SUBST[key_s])
-                    str_fno = root+os.sep+file
-                    str_fnn = root+os.sep+newf
-                    if str_fno !=str_fnn:
-                        print(f"Renaming:\n< {str_fno}\n> {str_fnn}")
-                        os.rename(str_fno, str_fnn)
+                lst_real_bad = [c for c in lst_bad if c not in SUBST.keys()]
+                print(f" Real Bad char(s) {lst_real_bad}: {[ord(c) for c in lst_real_bad]}: {root}{os.sep}{file}")
+                for c in lst_real_bad:
+                    SUBST[c] = '_'  # temporarily add this char, and a replace value
+            # Make a swap
+            if root.startswith(ZONEY):
+                newf = file
+                for key_s in SUBST.keys():
+                    newf = newf.replace(key_s, SUBST[key_s])
+                str_fno = root+os.sep+file
+                str_fnn = root+os.sep+newf
+                if str_fno !=str_fnn:
+                    print(f"Renaming:\n< {str_fno}\n> {str_fnn}")
+                    os.rename(str_fno, str_fnn)
 
 print(f"num: {num_invalids}")
 print(f"set: {sorted(list(set_invalids))}")
