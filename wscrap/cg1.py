@@ -14,7 +14,7 @@ catch_dir = r"C:\Users\22016\Downloads"  # win
 
 # Directory to save downloaded files
 # download_dir = r"/home/martin/repos/EC_stuff/wscrap/downloaded_files/"  # Linux
-download_dir = r"C:\Users\22016\Martin\repos\EC_stuff\wscrap\downloaded_files"  # Linux
+download_dir = r"C:\Users\22016\Martin\repos\EC_stuff\wscrap\downloaded_files"  # win
 
 # Log file to track downloaded files
 log_file = "download_log.txt"
