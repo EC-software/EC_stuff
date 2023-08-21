@@ -9,9 +9,12 @@ base_url = "https://hvidberg.net/Martin/Snaps_HDD/GEOSTAT/index.html"
 
 time_2_wait_4_download = 6
 
-catch_dir = r"/home/martin/Downloads/"
+# catch_dir = r"/home/martin/Downloads/"  # Linux
+catch_dir = r"C:\Users\22016\Downloads"  # win
+
 # Directory to save downloaded files
-download_dir = r"/home/martin/repos/EC_stuff/wscrap/downloaded_files/"
+# download_dir = r"/home/martin/repos/EC_stuff/wscrap/downloaded_files/"  # Linux
+download_dir = r"C:\Users\22016\Martin\repos\EC_stuff\wscrap\downloaded_files"  # Linux
 
 # Log file to track downloaded files
 log_file = "download_log.txt"
@@ -73,7 +76,8 @@ def main():
     opts.add_argument("--disable-dev-shm-usage")
 
     print("starting Chrome driver ...")
-    driver = webdriver.Chrome(options=opts)
+    # driver = webdriver.Chrome(options=opts)  # Linux
+    driver = webdriver.Chrome(options=opts)  # win
     print(f"Chrome driver started: {driver}")
 
     print(f"getting base url: {base_url}")
