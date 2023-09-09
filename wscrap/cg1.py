@@ -4,8 +4,14 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
+__version__ = '0.1.0'
+
+# ver. 0.1.0    First working version
+
 # URL of the website
-base_url = "https://hvidberg.net/Martin/Snaps_HDD/GEOSTAT/index.html"
+# base_url = "https://hvidberg.net/Martin/Snaps_HDD/GEOSTAT/index.html"
+base_url = "http://web.ais.dk/aisdata/"
+
 
 time_2_wait_4_download = 6
 
@@ -14,7 +20,9 @@ catch_dir = r"C:\Users\22016\Downloads"  # win
 
 # Directory to save downloaded files
 # download_dir = r"/home/martin/repos/EC_stuff/wscrap/downloaded_files/"  # Linux
-download_dir = r"C:\Users\22016\Martin\repos\EC_stuff\wscrap\downloaded_files"  # win
+# download_dir = r"C:\Users\22016\Martin\repos\EC_stuff\wscrap\downloaded_files"  # win
+download_dir = r"C:\Users\22016\Downloads\wscrap"  # win
+
 
 # Log file to track downloaded files
 log_file = "download_log.txt"

@@ -46,15 +46,16 @@ if args.tab:
 
 pasw = dic_con[host][user]["pw"]
 
+
 def get_recs(where = ''):
     """ Get the spcified records from the db """
     conn_string = "host='{}' port='{}' dbname='{}' user='{}' password='{}'".format(host,port,dbnam,user,pasw)
     try:
-        # get a connection, if a connect cannot be made an exception will be raised here
+        # get a connection, if a connection cannot be made an exception will be raised here
         conn = psycopg2.connect(conn_string)
     except psycopg2.OperationalError as e:
         num_error = 101
-        print "Error {} : psycopg2.connect({})\n{}".format(num_error, conn_string, e)
+        print("Error {} : psycopg2.connect({})\n{}".format(num_error, conn_string, e))
         sys.exit(num_error)
 
     # HERE IS THE IMPORTANT PART, by specifying a name for the cursor
@@ -66,15 +67,16 @@ def get_recs(where = ''):
         cursor = conn.cursor('cursor_unique_name', cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("SELECT * FROM {}.{} {}".format(schem, table, where))
     except psycopg2.ProgrammingError as e:
-        print "Can't fetch curser..."
-        print e
+        print("Can't fetch curser...")
+        print(e)
         sys.exit(102)
 
     lst_ret = list()
     for row in cursor:
-        print "{}".format(row)
+        print("{}".format(row))
         lst_ret.append(row)
     return lst_ret
+
 
 if __name__ == "__main__":
 
