@@ -1,15 +1,16 @@
 
 import os
 
-ROOT = r'D:\\'  # r'/home/martin/MEGA/Private'  #r'/home/martin/'  #
-EXT = '*'  #'.csv'  #
+ROOT = r'/home/martin/'  # r'D:\\'  # r'/home/martin/MEGA/Private'  #
+EXT = '.py'  #'.csv'  #
 SKIP = ['.mp3', '.mp4', '.pdf',
         '.js', '.css', '.ashx',
         '.jpg', '.png', '.gif',
         '.ods', '.odt', '.xls', '.doc', '.docx',
         '.7z', '.exe', '.dll']  # SKIP only used if EXT == '*'
 MAXSIZE = 10000
-WORDS = ['Marianne']
+WORDS = ['debug', 'INFO', 'WARNING', 'ERROR', 'FATAL']
+CASE = False
 
 def checkfor_words(lst_words, str_fn, mode='all'):
         num_ln = 0
@@ -28,9 +29,14 @@ def checkfor_words(lst_words, str_fn, mode='all'):
             for line in datafile:
                 num_ln += 1
                 if mode == 'all':
-                    if all([w in line for w in lst_words]):
-                        print(f"all: {lst_words}: {num_ln} < {line.strip()} in {str_fn}")
-                        lst_lines_found.append(line.strip())
+                    if CASE:
+                        if all([w in line for w in lst_words]):
+                            print(f"all: {lst_words}: {num_ln} < {line.strip()} in {str_fn}")
+                            lst_lines_found.append(line.strip())
+                    else:  # Not case sensitive
+                        if all([w.lower() in line.lower() for w in lst_words]):
+                            print(f"all: {lst_words}: {num_ln} < {line.strip()} in {str_fn}")
+                            lst_lines_found.append(line.strip())
         except UnicodeDecodeError:
             pass
             # print(f" - UnicodeDecodeError: {str_fn}")
@@ -65,7 +71,7 @@ def main(str_root):
                     # pass
                     print(f" - FileNotFoundError: {str_ffn}")
 
-            if num_cnt == 1 or num_cnt % 10000 == 0:
+            if num_cnt == 1 or num_cnt % 100000 == 0:
                 print(f"\tcnt: {num_cnt} - latest file: {os.path.join(root, file)}")
     print(f"\n {num_cnt} files scanned\n {num_hit} lines found")
 
