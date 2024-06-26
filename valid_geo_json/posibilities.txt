@@ -1,0 +1,13 @@
+
+
+### msgspec
+https://jcristharif.com/msgspec/examples/geojson.html
+https://jcristharif.com/msgspec/
+
+
+### pydantic
+https://vik-y.medium.com/pydantic-fast-and-pythonic-data-validation-for-your-python-applications-70fe339e4107
+https://github.com/gb-libs/pydantic-geojson
+
+# geojson
+https://github.com/jazzband/geojson
