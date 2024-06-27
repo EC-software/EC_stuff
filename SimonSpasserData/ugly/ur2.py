@@ -39,11 +39,11 @@ def write_geojson(str_gj, str_ffn_ou):
 
 def parse_coordinates(coord_list):
     coordinates = []
-    for coord_string in coord_list:
-        coord_pairs = coord_string.split(';')
+    for coord_string in coord_list:  smash them all together before parsing!
+        coord_pairs = coord_string.split('/')
         for pair in coord_pairs:
-            if '/' in pair:
-                x, y = pair.split('/')
+            if ' ' in pair:
+                x, y = pair.split(' ')
                 try:
                     coordinates.append([float(x), float(y)])
                 except ValueError:
