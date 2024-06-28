@@ -104,5 +104,3 @@ for itm in lst_ugly:
     dic_geojson = tup_ugly2geo_json(itm, dic_geojson)
 str_ffn_ou = f"{str_ffn_in.rsplit('.', 1)[0]}.geojson"
 write_geojson(str(dic_geojson).replace("'", '"'), str_ffn_ou)
-
-
