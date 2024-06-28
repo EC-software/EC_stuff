@@ -3,7 +3,7 @@
 
 import pprint
 
-str_ffn_in = r"data/samp1.txt"
+str_ffn_in = r"data/145202_COMBINED_FRONTS.txt"
 
 def read_ugly(file_path):
     lst_ret = list()
@@ -12,14 +12,8 @@ def read_ugly(file_path):
     i = 0
     while i < len(lst_line):
         str_header = lst_line[i].strip()
-        if any(char.isdigit() for char in str_header):
-            print(f"Unexpected format: Line {i} should be text without numbers.")
-            break
         i += 1
         str_note = lst_line[i].strip()
-        if any(char.isdigit() for char in str_note):
-            print(f"Unexpected format: Line {i} should be text without numbers.")
-            break
         i += 1
         lst_coord = []
         while i < len(lst_line):
