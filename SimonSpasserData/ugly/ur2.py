@@ -12,14 +12,13 @@ def read_ugly(file_path):
     i = 0
     while i < len(lst_line):
         str_header = lst_line[i].strip()
-        i += 1
         str_note = lst_line[i].strip()
-        i += 1
+        i += 2
         lst_coord = []
         while i < len(lst_line):
             line = lst_line[i].strip()
             if not any(char.isdigit() for char in line):
-                break
+                break  # This is a bold ChatGCP assumption - If a title contains a number, this will fail miserably!
             lst_coord.append(line)
             i += 1
         lst_ret.append((str_header, str_note, lst_coord))
@@ -32,54 +31,25 @@ def write_geojson(str_gj, str_ffn_ou):
 
 def tup_ugly2geo_json(tup_u, dic_gj):
 
-    def parse_coordinates(coord_list):
-        coordinates = []
+    def parse_coor(lst_coor):
         coord_string = "".join(coord_list)  # smash them all together before parsing!
-        coord_pairs = coord_string.split('/')
-        for pair in coord_pairs:
-            if ' ' in pair:
-                x, y = pair.split(' ')
-                try:
-                    coordinates.append([float(y), float(x)])
-                except ValueError:
-                    # Handle potential parsing errors, such as trailing periods.
-                    pass
-        return coordinates
+        return [[float(itm) for itm in reversed(pair.split(' '))] for pair in coord_string.split('/') if ' ' in pair]
 
     title, note, coord_list = tup_u
-
-    # Parse the coordinates
-    coordinates = parse_coordinates(coord_list)
-
     if "features" not in dic_gj:
         dic_gj = {
             "type": "FeatureCollection",
-            "features": [
-                {
-                    "type": "Feature",
-                    "properties": {
-                        "title": title,
-                        "note": note
-                    },
-                    "geometry": {
-                        "type": "LineString",
-                        "coordinates": coordinates
-                    }
-                }
-            ]
-        }
+            "features": [{
+                "type": "Feature",
+                "properties": {"title": title, "note": note},
+                "geometry": {"type": "LineString", "coordinates": parse_coor(coord_list)}}
+            ]}
     else:
         dic_gj['features'].append({
-                    "type": "Feature",
-                    "properties": {
-                        "title": title,
-                        "note": note
-                    },
-                    "geometry": {
-                        "type": "LineString",
-                        "coordinates": coordinates
-                    }
-                })
+            "type": "Feature",
+            "properties": {"title": title, "note": note},
+            "geometry": {"type": "LineString", "coordinates": parse_coor(coord_list)}}
+        )
     return dic_gj
 
 
@@ -89,10 +59,7 @@ for itm in lst_ugly:
     # print(itm)
     str_h, str_n, lst_c = itm
     print("------")
-    print(f"head: {str_h}")
-    print(f"note: {str_n}")
-    print(f"coor: {lst_c}")
-    print("  >> GeoJSON")
+    print(f" head: {str_h}\n note: {str_n}\n coor: {lst_c}\n  >> GeoJSON")
     dic_geojson = tup_ugly2geo_json(itm, dic_geojson)
 str_ffn_ou = f"{str_ffn_in.rsplit('.', 1)[0]}.geojson"
 write_geojson(str(dic_geojson).replace("'", '"'), str_ffn_ou)
