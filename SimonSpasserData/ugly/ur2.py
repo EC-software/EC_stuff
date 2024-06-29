@@ -29,6 +29,7 @@ def write_geojson(str_gj, str_ffn_ou):
     with open(str_ffn_ou, 'w') as fil_ou:
         fil_ou.write(f"{str_gj}\n")
 
+
 def tup_ugly2geo_json(tup_u, dic_gj):
 
     def parse_coor(lst_coor):
@@ -56,10 +57,8 @@ def tup_ugly2geo_json(tup_u, dic_gj):
 lst_ugly = read_ugly(str_ffn_in)
 dic_geojson = dict()
 for itm in lst_ugly:
-    # print(itm)
     str_h, str_n, lst_c = itm
-    print("------")
-    print(f" head: {str_h}\n note: {str_n}\n coor: {lst_c}\n  >> GeoJSON")
+    print(f"------\n head: {str_h}\n note: {str_n}\n coor: {lst_c}\n  >> GeoJSON")
     dic_geojson = tup_ugly2geo_json(itm, dic_geojson)
 str_ffn_ou = f"{str_ffn_in.rsplit('.', 1)[0]}.geojson"
 write_geojson(str(dic_geojson).replace("'", '"'), str_ffn_ou)
