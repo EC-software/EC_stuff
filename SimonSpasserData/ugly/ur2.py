@@ -30,23 +30,21 @@ def write_geojson(str_gj, str_ffn_ou):
     with open(str_ffn_ou, 'w') as fil_ou:
         fil_ou.write(f"{str_gj}\n")
 
-
-def parse_coordinates(coord_list):
-    coordinates = []
-    coord_string = "".join(coord_list)  # smash them all together before parsing!
-    coord_pairs = coord_string.split('/')
-    for pair in coord_pairs:
-        if ' ' in pair:
-            x, y = pair.split(' ')
-            try:
-                coordinates.append([float(x), float(y)])
-            except ValueError:
-                # Handle potential parsing errors, such as trailing periods.
-                pass
-    return coordinates
-
 def tup_ugly2geo_json(tup_u, dic_gj):
 
+    def parse_coordinates(coord_list):
+        coordinates = []
+        coord_string = "".join(coord_list)  # smash them all together before parsing!
+        coord_pairs = coord_string.split('/')
+        for pair in coord_pairs:
+            if ' ' in pair:
+                x, y = pair.split(' ')
+                try:
+                    coordinates.append([float(y), float(x)])
+                except ValueError:
+                    # Handle potential parsing errors, such as trailing periods.
+                    pass
+        return coordinates
 
     title, note, coord_list = tup_u
 

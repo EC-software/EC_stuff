@@ -7,5 +7,8 @@ find_pw_in_files.py
 /golden_triangle/data/THA/*
 /misc/data_pdf/*
 /wscrap/downloaded_files/*
-/wscrap/*.log
+*.log
 /wscrap/download_log.txt
+*.geojson
+/SimonSpasserData/ugly/data/145202_COMBINED_FRONTS.txt
+*.7z
