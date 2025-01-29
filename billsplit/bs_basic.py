@@ -50,7 +50,7 @@ while len(dic_balance.keys()) > 0:
         transf = (-1 * btm[0])  # only transfer part of Top's money
     else:
         transf = top[0]  # transfer all top's money
-    print(f" * Transfer: {top[1]} -> {btm[1]} : {transf}")
+    print(f" * {top[1]} -> {btm[1]} : {transf}")
     dic_balance[top[1]]['balnc'] -= transf
     dic_balance[btm[1]]['balnc'] += transf
     dic_balance, dic_clear = move2clear(dic_balance, dic_clear)
