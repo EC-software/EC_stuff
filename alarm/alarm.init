@@ -1,0 +1,29 @@
+{
+  "alarms": [
+    {
+      "type": "alarm",
+      "time": "13:00:00",
+      "sound": "Blackberry pro alarm.mp3",
+      "repeat_times": "3",
+      "repeat_delay": "360",
+      "snooze_allowed": "True"
+    },
+    {
+      "type": "hour_pling",
+      "time": "00:00:00",
+      "sound": "Big-Ben-01.mp3",
+      "repeat_times": "23",
+      "repeat_delay": "3600",
+      "snooze_allowed": "False"
+    }
+  ],
+  "sound_path": "sounds",
+  "key-board": {
+    "break": "esc",
+    "snooze": "space"
+    }
+  "EC-software": {
+    "file_type": "Alarm init",
+    "version": "1.0.0"
+  }
+}
