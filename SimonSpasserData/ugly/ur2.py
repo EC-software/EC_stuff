@@ -1,9 +1,7 @@
 
 # mainly ChactGPT generated ... but considerably edited to purpose
 
-import pprint
-
-str_ffn_in = r"data/145202_COMBINED_FRONTS.txt"
+str_ffn_in = r"in_file_name.txt"
 
 def read_ugly(file_path):
     lst_ret = list()

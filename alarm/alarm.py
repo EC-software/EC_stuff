@@ -1,11 +1,13 @@
+
+
 import time
 from datetime import datetime
 import os
 import platform
 
 # === Configuration ===
-target_time_str = "18:04:00"  # Format: HH:MM:SS (24-hour)
-mp3_file_path = "sounds//What_am_I_gonna_do_with_you.mp3"  # Change to your actual mp3 file path
+target_time_str = "14:30:00"  # Format: HH:MM:SS (24-hour)
+mp3_file_path = r"C:\Users\22016\Martin\repos\EC_stuff\alarm\sounds\Big-Ben-01.mp3"  # Change to your actual mp3 file path
 
 
 def play_sound(file_path):
