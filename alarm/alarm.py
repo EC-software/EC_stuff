@@ -6,7 +6,7 @@ import os
 import platform
 
 # === Configuration ===
-target_time_str = "10:20:00"  # Format: HH:MM:SS (24-hour)
+target_time_str = "14:30:00"  # Format: HH:MM:SS (24-hour)
 mp3_file_path = r"C:\Users\22016\Martin\repos\EC_stuff\alarm\sounds\Big-Ben-01.mp3"  # Change to your actual mp3 file path
 
 
