@@ -1,4 +1,5 @@
 """
+EC-software
 This small file demonstrates the typical everyday use of ecpw
 
 Line 10: import the ecpw module
