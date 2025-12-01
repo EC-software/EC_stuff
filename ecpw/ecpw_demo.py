@@ -12,4 +12,4 @@ ecs = ecpw.Store()
 
 entry = 'demo_db'
 db_ip, db_name, db_pw = ecs.gets(entry, ['ip', 'name', 'password'])
-print("{} : {}, use credentials: {} / {}".format(entry, db_ip, db_name, db_pw))
+print(f"{entry} : {db_ip}, use credentials: {db_name} / {db_pw}")

@@ -1,0 +1,11 @@
+{
+    "base": {
+        "demo_db": {
+            "ip": "127.1.0.0",
+            "name": "R515R",
+            "password": "SuperSecret"}
+    },
+    "crypt": null,
+    "ecpw_datatype": "ECPW",
+    "ecpw_version": "0.1"
+}
