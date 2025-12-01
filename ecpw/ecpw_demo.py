@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: ascii -*-
+
 """
 EC-software
 This small file demonstrates the typical everyday use of ecpw

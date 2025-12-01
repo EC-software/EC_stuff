@@ -2,6 +2,7 @@
 # -*- coding: ascii -*-
 
 """
+EC-software
 Storing identity user-names, passwords and other info in a safe place,
 away from your repository and work-dir, so it won't accidentally sync to
 bitbucket, github, dropbox or similar
